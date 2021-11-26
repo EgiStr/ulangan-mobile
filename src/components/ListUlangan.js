@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {globalStyles} from '../styles/global';
 
-export default function ListUlangan({data}) {
-  const onPress = () => {};
+export default function ListUlangan({data, navigation}) {
+  const onPress = () => {
+    navigation.navigate('PreUlangan');
+  };
   return (
     <View style={styles.container}>
       <View>
@@ -23,17 +26,14 @@ export default function ListUlangan({data}) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     marginHorizontal: 5,
     padding: 12,
-    shadowColor: '#000',
-    shadowOffset: {width: 5, height: 1},
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 1,
-    marginTop: 4,
+    marginTop: 10,
+    ...globalStyles.shadow,
   },
   title: {
-    paddingHorizontal: 2,
+    paddingHorizontal: 4,
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     marginTop: 5,
+    justifyContent: 'space-between',
   },
   buttonTitle: {
     justifyContent: 'center',

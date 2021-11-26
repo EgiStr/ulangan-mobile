@@ -6,6 +6,8 @@ import CreateScreen from '../screens/create';
 import SearchScreen from '../screens/search';
 import ProfileScreen from '../screens/profile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {globalColor} from '../styles/global';
+import RootStack from './_stackPusher';
 
 const TabStack = createBottomTabNavigator();
 const TabsScreen = () => {
@@ -29,18 +31,20 @@ const TabsScreen = () => {
             <Ionicons
               name={iconName}
               size={20}
-              color={focused ? 'tomato' : 'gray'}
+              color={focused ? globalColor.activeColor : 'gray'}
             />
           );
         },
         headerShown: false,
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: globalColor.activeColor,
         tabBarInactiveTintColor: 'gray',
       })}>
       <TabStack.Screen name={'Home'} component={StackHome} />
       <TabStack.Screen name={'Create'} component={CreateScreen} />
       <TabStack.Screen name={'Profile'} component={ProfileScreen} />
+      <TabStack.Screen name={'Test'} component={RootStack} />
     </TabStack.Navigator>
   );
 };
+
 export default TabsScreen;
