@@ -13,7 +13,11 @@ export default function StackHome() {
         options={{title: 'hello world', headerShown: false}}
       />
       <Stack.Screen name="PreUlangan" component={PreUlangan} />
-      <Stack.Screen name="Ulangan" component={Ulangan} />
+      <Stack.Screen
+        name="Ulangan"
+        component={Ulangan}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

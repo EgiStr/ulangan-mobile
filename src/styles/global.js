@@ -5,6 +5,7 @@ export const globalColor = {
   container: '#fff',
   activeColor: '#7bc5c1',
   clickColor: 'eab875',
+  text:"black"
 };
 
 export const globalStyles = StyleSheet.create({

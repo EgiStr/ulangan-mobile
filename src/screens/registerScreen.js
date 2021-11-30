@@ -1,11 +1,16 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import React, {useContext,  useState} from 'react';
+import {TouchableOpacity, StyleSheet, View, Button, Text} from 'react-native';
 import TextInput from '../components/TextInput';
 import emailValidator from '../helpers/emailValidator';
 import passwordValidator, {ComparePassword} from '../helpers/passwordValidator';
 import nameValidator from '../helpers/usernameValidation';
+import axios from '../../services/axios/axios';
+import Login from '../helpers/loginFunction';
+import {GlobalContext} from '../../store/store';
 
-export default function RegisterScreen({navigation}) {
+const RegisterScreen = ({navigation}) => {
+  // globalContext
+  const {dispatch} = useContext(GlobalContext);
   const [username, setUsername] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
@@ -23,15 +28,33 @@ export default function RegisterScreen({navigation}) {
       setPassword({...password, error: passwordError});
       return;
     }
+    // create data for post request
+
+    const data = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      password2: password2.value,
+    };
+    // axios post request Register
+    axios
+      .post('register', data)
+      .then(async res => {
+        const isLogin = await Login(email.value, password.value);
+        dispatch({type: 'LOGIN', payload: isLogin});
+      })
+      .catch(err => {
+        alert(err.response.data.message);
+      });
   };
 
   return (
-    <>
+    <View>
       <TextInput
         label="Username"
         returnKeyType="next"
         value={username.value}
-        onChangeText={text => setEmail({value: text, error: ''})}
+        onChangeText={text => setUsername({value: text, error: ''})}
         error={!!username.error}
         errorText={username.error}
         autoCapitalize="none"
@@ -66,19 +89,18 @@ export default function RegisterScreen({navigation}) {
         errorText={password2.error}
         secureTextEntry
       />
-      <Button mode="contained" onPress={onRegisterPressed}>
-        Register
-      </Button>
+      <Button title={'Register'} onPress={onRegisterPressed} />
+
       <View style={styles.row}>
         <Text>have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('login')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.link}>SignIn</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
-}
-
+};
+export default RegisterScreen;
 const styles = StyleSheet.create({
   forgotPassword: {
     width: '100%',
@@ -88,13 +110,5 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     marginTop: 4,
-  },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
   },
 });

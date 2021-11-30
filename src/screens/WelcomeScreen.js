@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 const WelcomeScreen = ({navigation}) => {
   return (
@@ -10,6 +9,7 @@ const WelcomeScreen = ({navigation}) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
+     
       <TouchableOpacity
         style={{
           backgroundColor: '#000',

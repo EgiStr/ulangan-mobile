@@ -1,7 +1,9 @@
-import axios from '../../services/axios';
-import isTokenExpired from '../../helpers/isTokenExpired';
+import axios from '../../services/axios/axios';
+import isTokenExpired from './jwt/isTokenExpired';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const setCredentials = async keys => {
+import decodeJwt from './jwt/decodeJwt';
+
+export const setCredentials = async keys => {
   try {
     await AsyncStorage.setItem('keys', JSON.stringify(keys));
   } catch (e) {
@@ -9,8 +11,22 @@ const setCredentials = async keys => {
   }
 };
 
+export const getUser = async () => {
+  try {
+    const keys = await AsyncStorage.getItem('keys');
+    // parse the keys to get the user
+    const user = decodeJwt(JSON.parse(keys).access);
+    return user.user    
+  } catch (e) {
+    console.log(e,"user");
+  }
+};
+
 async function getAccessUsingRefresh(refreshToken) {
-  return axios.post('/refresh',{refreshToken}).then(res => res.data).catch(err => console.log(err))
+  return axios
+    .post('/refresh', {refreshToken})
+    .then(res => res.data)
+    .catch(err => console.log(err));
 }
 
 async function getVerifiedKeys(keys) {
@@ -18,7 +34,6 @@ async function getVerifiedKeys(keys) {
 
   if (keys) {
     console.log('checking access');
-
     if (!isTokenExpired(keys.access)) {
       console.log('returning access');
 

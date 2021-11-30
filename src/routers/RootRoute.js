@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import getCredentials from '../helpers/setCredentials';
 import StackAuth from './StackAuth';
 import TabsScreen from './tabNavigation';
+import {createStackNavigator} from '@react-navigation/stack';
+import {GlobalContext} from '../../store/store';
+export default function RootStack(props) {
+  const {state, dispatch} = useContext(GlobalContext);
 
-const RootStackScreen = async () => {
-  const [isLogin, setIsLogin] = useState(null);
   const checkToken = async () => {
     try {
-      const token = await getCredentials()
+      const token = await getCredentials();
       if (token) {
-        setIsLogin(true);
+        dispatch({type: 'LOGIN'});
       }
     } catch (error) {
       console.log(error);
@@ -19,21 +21,14 @@ const RootStackScreen = async () => {
     checkToken();
   }, []);
 
+  const Stack = createStackNavigator();
   return (
-    <RootStack.Navigator headerMode="none" >
-      {isLogin ? (
-        <RootStack.Screen name={'Home'} component={TabsScreen} />
+    <Stack.Navigator {...props} screenOptions={{headerShown: false}}>
+      {state.login ? (
+        <Stack.Screen name="feed" component={TabsScreen} />
       ) : (
-        <RootStack.Screen
-          name={'Welcome'}
-          component={StackAuth}
-          options={{
-            animationEnabled: false,
-          }}
-        />
+        <Stack.Screen name="auth" component={StackAuth} />
       )}
-    </RootStack.Navigator>
+    </Stack.Navigator>
   );
-};
-
-export default RootStackScreen
+}

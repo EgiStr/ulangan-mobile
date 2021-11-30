@@ -4,20 +4,22 @@ import {globalStyles} from '../styles/global';
 
 export default function ListUlangan({data, navigation}) {
   const onPress = () => {
-    navigation.navigate('PreUlangan');
+    navigation.navigate('PreUlangan',{
+      data:data
+    });
   };
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.title}>Judul 50 Halaman</Text>
+        <Text style={styles.title}>{data.title}</Text>
       </View>
       <View>
-        <Text style={styles.author}>eggi satria</Text>
+        <Text style={styles.author}>{data.owner.username}</Text>
       </View>
       <View style={styles.button}>
-        <Text>Belum diKerjakan</Text>
+        <Text style={{color:"black"}}>Belum diKerjakan</Text>
         <TouchableOpacity onPress={onPress} style={styles.buttonTitle}>
-          <Text>Mulai</Text>
+          <Text style={{color:"black"}}>Mulai</Text>
         </TouchableOpacity>
       </View>
     </View>

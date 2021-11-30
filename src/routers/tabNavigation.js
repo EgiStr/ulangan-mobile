@@ -3,11 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import StackHome from './stackHome';
 
 import CreateScreen from '../screens/create';
-import SearchScreen from '../screens/search';
 import ProfileScreen from '../screens/profile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {globalColor} from '../styles/global';
-import RootStack from './_stackPusher';
 
 const TabStack = createBottomTabNavigator();
 const TabsScreen = () => {
@@ -42,7 +40,6 @@ const TabsScreen = () => {
       <TabStack.Screen name={'Home'} component={StackHome} />
       <TabStack.Screen name={'Create'} component={CreateScreen} />
       <TabStack.Screen name={'Profile'} component={ProfileScreen} />
-      <TabStack.Screen name={'Test'} component={RootStack} />
     </TabStack.Navigator>
   );
 };

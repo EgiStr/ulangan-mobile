@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
-import TextInput from '../components/TextInput';
+import React, {useState,useContext} from 'react';
+import {TouchableOpacity, StyleSheet, View, Button, Text} from 'react-native';
+import { GlobalContext } from '../../store/store';
 
-export default function LoginScreen({navigation}) {
+import TextInput from '../components/TextInput';
+import emailValidator from '../helpers/emailValidator';
+import Login from '../helpers/loginFunction';
+import passwordValidator from '../helpers/passwordValidator';
+
+const LoginScreen = ({navigation}) => {
+  const {dispatch} = useContext(GlobalContext)
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -14,15 +20,20 @@ export default function LoginScreen({navigation}) {
       setPassword({...password, error: passwordError});
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'Dashboard'}],
-    });
+    try {
+      // create login function
+
+      const isLogin = await Login(email.value, password.value);
+      if (isLogin) {
+        dispatch({type: 'LOGIN'})
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <>
-      <Header>Welcome back.</Header>
+    <View>
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -50,18 +61,17 @@ export default function LoginScreen({navigation}) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onLoginPressed}>
-        Login
-      </Button>
+      <Button title={'LOGIN'} onPress={onLoginPressed} />
+
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   forgotPassword: {
@@ -75,10 +85,11 @@ const styles = StyleSheet.create({
   },
   forgot: {
     fontSize: 13,
-    color: theme.colors.secondary,
+    color: 'red',
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: 'blue',
   },
 });
+export default LoginScreen;
