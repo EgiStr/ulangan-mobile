@@ -29,13 +29,21 @@ const TabsScreen = () => {
             <Ionicons
               name={iconName}
               size={20}
-              color={focused ? globalColor.activeColor : 'gray'}
+              color={focused ? globalColor.activeColor : 'white'}
             />
           );
         },
         headerShown: false,
+        // set ActiceColor gradient from globalColor.buttonA and buttonB
         tabBarActiveTintColor: globalColor.activeColor,
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveBackgroundColor: globalColor.background,
+        tabBarInactiveBackgroundColor: globalColor.background,
+        tabBarStyle: {
+          backgroundColor: globalColor.background,
+          borderTopColor: 'transparent',
+          borderTopWidth: 0,
+      
+        },
       })}>
       <TabStack.Screen name={'Home'} component={StackHome} />
       <TabStack.Screen name={'Create'} component={CreateScreen} />

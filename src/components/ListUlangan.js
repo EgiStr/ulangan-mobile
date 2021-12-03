@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {globalStyles} from '../styles/global';
+import {globalColor, globalStyles} from '../styles/global';
 
 export default function ListUlangan({data, navigation}) {
   const onPress = () => {
@@ -17,7 +17,7 @@ export default function ListUlangan({data, navigation}) {
         <Text style={styles.author}>{data.owner.username}</Text>
       </View>
       <View style={styles.button}>
-        <Text style={{color:"black"}}>Belum diKerjakan</Text>
+        <Text style={styles.tuntas}>Belum diKerjakan</Text>
         <TouchableOpacity onPress={onPress} style={styles.buttonTitle}>
           <Text style={{color:"black"}}>Mulai</Text>
         </TouchableOpacity>
@@ -28,20 +28,28 @@ export default function ListUlangan({data, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     marginHorizontal: 5,
     padding: 12,
     marginTop: 10,
-    ...globalStyles.shadow,
+    borderBottomColor: '#eaeaea',
+    borderBottomWidth: 1,
   },
   title: {
-    paddingHorizontal: 4,
-    fontSize: 16,
+    paddingHorizontal: 5,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
   },
   author: {
+    paddingHorizontal: 5,
     marginLeft: 2,
+  },
+  tuntas: {
+    paddingHorizontal: 5,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: 'green',
   },
   button: {
     flexDirection: 'row',
@@ -50,9 +58,10 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     justifyContent: 'center',
-    backgroundColor: 'aqua',
+    backgroundColor: globalColor.activeColor,
     paddingHorizontal: 10,
     paddingVertical: 3,
     borderRadius: 5,
+    color: 'white',
   },
 });

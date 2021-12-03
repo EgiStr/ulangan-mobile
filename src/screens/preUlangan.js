@@ -5,24 +5,24 @@ import {globalColor} from '../styles/global';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Pusher from 'pusher-js/react-native';
 import generateUUID from '../helpers/uuid';
-
-const baseURL = 'https://98a5-114-142-173-5.ngrok.io/api/v1/';
-
+import { baseURL } from '../../temp/config';
 const pusher_app_key = 'ed208f4daf54b4f9b8fd';
 const pusher_app_cluster = 'ap1';
 
 export default function preUlangan({navigation, route}) {
   const data = route.params.data;
-
+  const [time, setTime] = React.useState(15);
   const enterQuizSolo = async () => {
-    const uuid = generateUUID();
+    const uuid = generateUUID().substring(0, 6);
+    // get uuid just 0 to 6 char
+    const channelName = `quiz-solo-${uuid}`
     const pusher = new Pusher(pusher_app_key, {
       authEndpoint: `${baseURL}/pusher/auth`,
       cluster: pusher_app_cluster,
       encrypted: true,
     });
 
-    const quizChannel = pusher.subscribe(`quiz-channel-private-${uuid}`);
+    const quizChannel = pusher.subscribe(channelName);
     quizChannel.bind('pusher:subscription_error', status => {
       console.log(status);
       Alert.alert(
@@ -36,6 +36,8 @@ export default function preUlangan({navigation, route}) {
         pusher,
         quizChannel,
         id: data._id,
+        channelId: uuid,
+        time,
       });
     });
   };
@@ -59,6 +61,7 @@ export default function preUlangan({navigation, route}) {
         pusher,
         quizChannel,
         id: data._id,
+        channelId: uuid,
       });
     });
   };
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 10,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -157,12 +160,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: globalColor.background,
-    justifyContent: 'center',
+    justifyContent:'space-between'
   },
   // card bootsrap
   // detail section
   containerDetail: {
     flex: 1,
+    padding:15
   },
   containerDetailTitle: {
     marginBottom: 20,
@@ -170,13 +174,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleDetail: {
-    fontSize: 26,
+    fontSize: 20,
     color: 'black',
     fontWeight: 'bold',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+    marginBottom: 10,
   },
   authorDetail: {
     marginLeft: 2,
+    fontSize: 15,
+    marginBottom: 10,
   },
   // share button
   containerShare: {
@@ -187,7 +194,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonShare: {
-    backgroundColor: 'aqua',
+    backgroundColor: globalColor.activeColor,
     paddingHorizontal: 20,
     paddingVertical: 5,
     borderRadius: 5,
@@ -200,14 +207,15 @@ const styles = StyleSheet.create({
   // action section
   containerAction: {
     marginVertical: 20,
+    marginBottom:60
   },
   buttonAction: {
     marginTop: 10,
-    backgroundColor: 'aqua',
+    backgroundColor: globalColor.activeColor,
     paddingHorizontal: 20,
     paddingVertical: 5,
     borderRadius: 5,
-    width: '80%',
+    width: '86%',
     alignSelf: 'center',
   },
   buttonActionText: {

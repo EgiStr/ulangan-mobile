@@ -1,9 +1,13 @@
 import axios from 'axios';
 import getCredentials from '../../src/helpers/setCredentials';
+import {baseURL} from '../../temp/config';
 
-const baseURL = 'https://98a5-114-142-173-5.ngrok.io/api/v1/';
-
-const axiosApiInstance = axios.create({baseURL});
+const axiosApiInstance = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
@@ -15,8 +19,6 @@ axiosApiInstance.interceptors.request.use(
 
     config.headers = {
       Authorization: `Bearer ${value.access}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
     };
     return config;
   },

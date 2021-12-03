@@ -1,11 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 export const globalColor = {
-  background: '#d3e3e2',
-  container: '#fff',
-  activeColor: '#7bc5c1',
-  clickColor: 'eab875',
-  text:"black"
+  background: "rgba(54,58,102,0.8)",
+  container: '#3b82f6',
+  activeColor: '#FFB8BF',
+  clickColor: '#3b82f6',
+  buttonA:"#982AA8",
+  buttonB:"#BC344C",
+  text: '#fff',
+
 };
 
 export const globalStyles = StyleSheet.create({
