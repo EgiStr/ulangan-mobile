@@ -20,7 +20,7 @@ const ProfileBoxHome = ({user}) => {
       </View>
       <View style={styles.searchView}>
         <TextInput style={styles.searchInput} placeholder="Search" />
-        <Ionicons name="ios-search" size={30} color="white" />
+        <Ionicons name="ios-search" size={25} color="white" />
       </View>
     </View>
   );
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#fff',
+    paddingBottom: 10,
   },
   join: {
     flexDirection: 'row',
@@ -65,22 +68,23 @@ const styles = StyleSheet.create({
   },
 
   searchView: {
+    marginTop: 20,  
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    width: '90%',
+    height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   searchText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
   searchInput: {
-    color: 'black',
-    width: '90%',
-    height: 40,
-    borderColor: 'white',
-    borderWidth: 1,
-    borderRadius: 5,
+    width: "85%",
+    color: 'white',
     padding: 10,
   },
 });

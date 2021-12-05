@@ -19,7 +19,7 @@ export default function ListUlangan({data, navigation}) {
       <View style={styles.button}>
         <Text style={styles.tuntas}>Belum diKerjakan</Text>
         <TouchableOpacity onPress={onPress} style={styles.buttonTitle}>
-          <Text style={{color:"black"}}>Mulai</Text>
+          <Text style={{color:"white"}}>Mulai</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -36,10 +36,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   title: {
+
     paddingHorizontal: 5,
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   author: {
     paddingHorizontal: 5,

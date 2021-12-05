@@ -13,8 +13,15 @@ export default function ulangan({navigation, route}) {
   const [show_result, setShowResult] = useState(false);
   const [data, setData] = useState({});
   const [total_question, setTotalQuestion] = useState({current: 0, total: 0});
-  const [current_question, setCurrentQuestion] = useState(false);
-  const [score, setScore] = useState(0);
+  const [new_question, setNewQuestion] = useState(false);
+
+  const [performance, setPerformance] = useState({
+    score: 0,
+    strike: 1,
+    best_strike: 1,
+    correct_answer: 0,
+    time_taken:0
+  });
   function timeoutPromise(ms, promise) {
     return new Promise((resolve, reject) => {
       // countdown timer for countdown
@@ -23,19 +30,15 @@ export default function ulangan({navigation, route}) {
           const cnt = prevState > 0 ? prevState - 1 : 0;
           if (cnt === 0) {
             clearInterval(interval);
+            promise
+              .then(res => {
+                resolve(res);
+              })
+              .catch(err => reject(err));
           }
           return cnt;
         });
       }, 1000);
-
-      promise.then(
-        res => {
-          resolve(res);
-        },
-        err => {
-          reject(err);
-        },
-      );
     });
   }
 
@@ -62,8 +65,7 @@ export default function ulangan({navigation, route}) {
     getQuestions();
     const quizChannel = route.params.quizChannel;
     quizChannel.bind('question-given', data => {
-      console.log(data);
-      setCurrentQuestion(true);
+      setNewQuestion(true);
       setCountdown(total_time);
       setShowResult(false);
       setData(data);
@@ -76,12 +78,20 @@ export default function ulangan({navigation, route}) {
           const cnt = prevState > 0 ? prevState - 1 : 0;
           if (cnt === 0) {
             clearInterval(interval);
+            return cnt;
           }
           return cnt;
         });
       }, 1000);
     });
   }, []);
+  if (
+    countdown === 0 &&
+    total_question.total !== 0 &&
+    total_question.current === total_question.total
+  ) {
+    navigation.navigate('SummaryQuiz', {performance, total_question});
+  }
 
   return cooldown > 0 && data ? (
     <View style={styles.overlay}>
@@ -99,7 +109,12 @@ export default function ulangan({navigation, route}) {
         />
 
         {countdown > 0 && <ProgressBar time={countdown} total={total_time} />}
-        <Text style={{margin: 5, color: 'black'}}>Score : {score}</Text>
+        <Text style={{margin: 5, color: 'white'}}>
+          Score : {performance.score}
+        </Text>
+        <Text style={{margin: 5, color: 'white'}}>
+          Strike : {performance.strike}
+        </Text>
       </View>
       <View style={styles.quiz}>
         {/* title view */}
@@ -115,9 +130,10 @@ export default function ulangan({navigation, route}) {
                   data={item}
                   show_result={show_result}
                   setShowResult={setShowResult}
-                  setCurrentQuestion={setCurrentQuestion}
-                  current_question={current_question}
-                  setScore={setScore}
+                  setCurrentQuestion={setNewQuestion}
+                  current_question={new_question}
+                  performance={performance}
+                  setPerformance={setPerformance}
                   countdown={countdown}
                   total_questions={total_question.total}
                   total_time={total_time}
@@ -150,13 +166,15 @@ const styles = StyleSheet.create({
   },
   attemp_quiz: {},
   header: {
+    paddingBottom: 20,
+    marginBottom: 5,
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   quiz: {
     flex: 9,
-    marginTop: 60,
+    marginTop: 80,
   },
 
   countdown: {

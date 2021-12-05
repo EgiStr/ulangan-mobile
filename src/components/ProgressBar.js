@@ -6,7 +6,7 @@ const ProgressBar = ({time, total}) => {
   // convert second to percentage where 1 second = 100%
   const percentage = (time / total) * 100;
   // reverse percentage to get the progress bar to fill from right to left
-//   const progress = !percentage ? 100 : 100 - percentage;
+  //   const progress = !percentage ? 100 : 100 - percentage;
 
   return (
     // animated progress bar
@@ -44,14 +44,16 @@ const styles = StyleSheet.create({
   progressBar: {
     width: '100%',
     height: 20,
-    borderRadius: 5,    
-    margin:15,
-    paddingHorizontal:15
+    borderRadius: 5,
+    margin: 15,
+    paddingHorizontal: 15,
   },
   progressBarFill: {
     width: `0%`,
     height: '100%',
     borderRadius: 5,
+    borderColor: '#00bcd4',
+    borderWidth: 1,
     backgroundColor: '#00bcd4',
   },
   progressBarText: {

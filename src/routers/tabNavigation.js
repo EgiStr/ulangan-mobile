@@ -36,10 +36,10 @@ const TabsScreen = () => {
         headerShown: false,
         // set ActiceColor gradient from globalColor.buttonA and buttonB
         tabBarActiveTintColor: globalColor.activeColor,
-        tabBarActiveBackgroundColor: globalColor.background,
-        tabBarInactiveBackgroundColor: globalColor.background,
+        tabBarActiveBackgroundColor: globalColor.container,
+        tabBarInactiveBackgroundColor: globalColor.container,
         tabBarStyle: {
-          backgroundColor: globalColor.background,
+          backgroundColor: globalColor.container,
           borderTopColor: 'transparent',
           borderTopWidth: 0,
       

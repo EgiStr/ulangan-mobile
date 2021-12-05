@@ -94,18 +94,6 @@ const home = ({navigation}) => {
       style={{
         backgroundColor: globalColor.background,
       }}>
-      <TouchableWithoutFeedback onPress={handleScrollToTop}>
-        <Text
-          style={{
-            padding: 10,
-            fontSize: 25,
-            color: 'black',
-            justifyContent: 'center',
-            textAlign: 'center',
-          }}>
-          List Ulangan
-        </Text>
-      </TouchableWithoutFeedback>
       <FlatList
         data={data}
         renderItem={({item}) => (

@@ -4,6 +4,7 @@ import Home from '../screens/home';
 import Ulangan from '../screens/ulangan';
 import PreUlangan from '../screens/preUlangan';
 import {globalColor} from '../styles/global';
+import SummaryQuiz from '../screens/SummaryQuiz';
 export default function StackHome() {
   const Stack = createStackNavigator();
   return (
@@ -22,7 +23,7 @@ export default function StackHome() {
           fontWeight: 'bold',
           fontSize: 20,
         },
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         name="HomeStack"
@@ -33,6 +34,11 @@ export default function StackHome() {
       <Stack.Screen
         name="Ulangan"
         component={Ulangan}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SummaryQuiz"
+        component={SummaryQuiz}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

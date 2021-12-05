@@ -123,7 +123,7 @@ export default function preUlangan({navigation, route}) {
           <Text style={styles.authorDetail}>
             by{' '}
             {
-              <Text style={{color: 'black', fontSize: 20}}>
+              <Text style={{color: 'rgba(255,255,255,0.7)', fontSize: 20}}>
                 {data.owner.username}
               </Text>
             }
@@ -175,13 +175,14 @@ const styles = StyleSheet.create({
   },
   titleDetail: {
     fontSize: 20,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     marginHorizontal: 5,
     marginBottom: 10,
   },
   authorDetail: {
     marginLeft: 2,
+    color: "rgba(255,255,255,0.5)",
     fontSize: 15,
     marginBottom: 10,
   },

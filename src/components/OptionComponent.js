@@ -19,10 +19,10 @@ const OptionComponent = ({
   question_id,
   setCurrentQuestion,
   current_question,
-  setScore,
   countdown,
   total_questions,
-  total_time
+  total_time,
+  setPerformance,
 }) => {
   const {_id, correct, content} = data;
   const [color, setColor] = React.useState(random_color());
@@ -44,10 +44,27 @@ const OptionComponent = ({
     setIsSelected(true);
     setShowResult(true);
     setCurrentQuestion(false);
-    correct && setScore(score => Math.ceil(score + ((countdown / total_time) * 100 * total_questions)));
+
+    correct &&
+      setPerformance(prev => ({
+        ...prev,
+        correct_answer: prev.correct_answer + 1,
+        strike: prev.strike + 1,
+        best_strike:
+          prev.best_strike > prev.strike ? prev.best_strike : prev.strike,
+        score:
+          prev.score +
+          Math.ceil(
+            ((countdown * prev.strike) / total_time) * 100 * total_questions,
+          ),
+      }));
+    setPerformance(prev => ({
+      ...prev,
+      time_taken: prev.time_taken + countdown,
+    }));
     const data = {
       question_id: question_id.toString(),
-      answers: _id.toString(),
+      answers: {answer: _id.toString(), question: question_id.toString()},
     };
 
     axiosApiInstance
